@@ -30,7 +30,12 @@ public class LivrosResources {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Livro buscar(@PathVariable("id")	 Long id) {
-		return livrosrepository.findOne(id);		
+	public Livro buscar(@PathVariable("id") Long id) {
+		return livrosrepository.findOne(id);				
 	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public void deletar(@PathVariable("id") Long id) {
+		livrosrepository.delete(id);		
+	}	
 }
