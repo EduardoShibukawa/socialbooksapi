@@ -22,8 +22,8 @@ public class LivrosResources {
 	private LivrosRepository livrosrepository;
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public List<Livro> listar() {
-		return livrosrepository.findAll(); 			
+	public ResponseEntity<List<Livro>> listar() {
+		return ResponseEntity.ok(livrosrepository.findAll()); 			
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
@@ -57,7 +57,13 @@ public class LivrosResources {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void deletar(@PathVariable("id") Long id) {
-		livrosrepository.delete(id);		
+	public ResponseEntity<Void> deletar(@PathVariable("id") Long id) {
+		try {
+			livrosrepository.delete(id);
+		} catch (Exception e) {
+			return ResponseEntity.notFound().build();
+		}
+		
+		return ResponseEntity.noContent().build();				
 	}	
 }
