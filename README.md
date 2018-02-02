@@ -7,7 +7,7 @@ Projeto do Curso de REST e Java da algaworks
 ### Prerequisites
 
   * Java 1.8
-  * Spring Tool Suite 3.9.2.RELEASE
+  * Spring Tool Suite 3.9.2.RELEASE   
 
 ## Authors
 
