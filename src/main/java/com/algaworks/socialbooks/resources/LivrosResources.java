@@ -29,6 +29,13 @@ public class LivrosResources {
 		livrosrepository.save(livro);
 	}
 	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public void atualizar(@RequestBody Livro livro, @PathVariable("id") Long id) {
+		livro.setId(id);
+		
+		livrosrepository.save(livro);				
+	}
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Livro buscar(@PathVariable("id") Long id) {
 		return livrosrepository.findOne(id);				
