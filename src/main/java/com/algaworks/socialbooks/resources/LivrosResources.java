@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.algaworks.socialbooks.domain.Comentario;
 import com.algaworks.socialbooks.domain.Livro;
 import com.algaworks.socialbooks.services.LivrosServices;
-import com.algaworks.socialbooks.services.exceptions.LivroNaoEncontradoxException;
 
 @RestController
 @RequestMapping("/livros")
@@ -60,4 +60,16 @@ public class LivrosResources {
 		
 		return ResponseEntity.noContent().build();				
 	}	
+	
+	@RequestMapping(value = "/{id}/comentarios", method = RequestMethod.POST)
+	public ResponseEntity<Void> adicionarComentario(
+			@PathVariable("id") Long livroid,		
+			@RequestBody Comentario comentario) {
+		
+		livrosservice.salvar(livroid, comentario);
+		
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
+		
+		return ResponseEntity.created(uri).build();
+	}
 }
