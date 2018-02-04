@@ -11,6 +11,7 @@ import com.algaworks.socialbooks.domain.Comentario;
 import com.algaworks.socialbooks.domain.Livro;
 import com.algaworks.socialbooks.repository.ComentariosRepository;
 import com.algaworks.socialbooks.repository.LivrosRepository;
+import com.algaworks.socialbooks.services.exceptions.AutorExistenteException;
 import com.algaworks.socialbooks.services.exceptions.LivroNaoEncontradoxException;
 
 @Service
@@ -20,8 +21,7 @@ public class LivrosServices {
 	
 	@Autowired
 	private ComentariosRepository comentariosrepository;
-	
-				
+					
 	public List<Livro> listar(){
 		return livrosrepository.findAll();
 	}
@@ -37,7 +37,14 @@ public class LivrosServices {
 	}
 	
 	public Livro salvar(Livro livro) {
-		livro.setId(null);		
+		if (livro.getId() != null) {
+			Livro a = livrosrepository.findOne(livro.getId());
+			
+			if (a != null) {
+				throw new AutorExistenteException("Livro existente!");		
+			}			
+		}
+			
 		return livrosrepository.save(livro);	
 	}
 	
@@ -59,8 +66,12 @@ public class LivrosServices {
 		buscar(id);
 	}
 	
-	public Comentario salvar(Long livroid, Comentario comentario) {
+	public Comentario salvarComentario(Long livroid, Comentario comentario) {
 		Livro livro = buscar(livroid);
+		
+		if (livro == null) {
+			throw new LivroNaoEncontradoxException("Livro não encontrado!");
+		}
 		
 		comentario.setLivro(livro);
 		comentario.setData(new Date());

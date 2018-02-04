@@ -66,7 +66,7 @@ public class LivrosResources {
 			@PathVariable("id") Long livroid,		
 			@RequestBody Comentario comentario) {
 		
-		livrosservice.salvar(livroid, comentario);
+		livrosservice.salvarComentario(livroid, comentario);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
 		
