@@ -2,6 +2,7 @@ package com.algaworks.socialbooks.handler;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -41,5 +42,19 @@ public class ResourceExceptionHandler {
 		erro.setTimestamp(System.currentTimeMillis());
 		
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(erro);		
+	}
+	
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public ResponseEntity<DetalhesErro> handleAutorExistenteException(
+			DataIntegrityViolationException e, HttpServletRequest request) {
+		
+		DetalhesErro erro = new DetalhesErro();
+		
+		erro.setStatus(400l);
+		erro.setTitulo("Requisição inválida!");
+		erro.setMensagemDesenvolvedor("http://erros.socialbooks.com/400");
+		erro.setTimestamp(System.currentTimeMillis());
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);		
 	}
 }
