@@ -1,6 +1,6 @@
 package com.algaworks.socialbooks.services.exceptions;
 
-public class AutorExistenteException extends RuntimeException {		
+public class AutorExistenteException extends EntidadeExistenteException {		
 
 	/**
 	 * 
@@ -8,10 +8,10 @@ public class AutorExistenteException extends RuntimeException {
 	private static final long serialVersionUID = 1767749817939741532L;
 
 	public AutorExistenteException(String mensagem) {
-		super(mensagem);		
+		super("Livro", mensagem);		
 	}
 	
 	public AutorExistenteException(String mensagem, Throwable causa) {
-		 super(mensagem, causa);		
+		 super("Livro", mensagem, causa);		
 	}	
 }

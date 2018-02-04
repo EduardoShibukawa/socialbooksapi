@@ -1,6 +1,6 @@
 package com.algaworks.socialbooks.services.exceptions;
 
-public class AutorNaoEncontradoxException extends RuntimeException {	
+public class AutorNaoEncontradoxException extends EntidadeNaoEncontradoxException {	
 	/**
 	 * 
 	 */
@@ -8,10 +8,10 @@ public class AutorNaoEncontradoxException extends RuntimeException {
 	private static final long serialVersionUID = -7353911012482767884L;
 
 	public AutorNaoEncontradoxException(String mensagem) {
-		super(mensagem);		
+		super("Autor", mensagem);		
 	}
 	
 	public AutorNaoEncontradoxException(String mensagem, Throwable causa) {
-		 super(mensagem, causa);		
+		 super("Autor", mensagem, causa);		
 	}	
 }
