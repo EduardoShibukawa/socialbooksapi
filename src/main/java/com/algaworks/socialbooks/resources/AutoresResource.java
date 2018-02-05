@@ -3,6 +3,8 @@ package com.algaworks.socialbooks.resources;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +29,7 @@ public class AutoresResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> salvar(@RequestBody Autor autor) {
+	public ResponseEntity<Void> salvar(@Valid @RequestBody Autor autor) {
 		autor = autoresService.salvar(autor);
 		
 		URI uri = ServletUriComponentsBuilder
@@ -38,6 +40,13 @@ public class AutoresResource {
 		return ResponseEntity.created(uri).build();						
 	}
 	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> atualizar(@Valid @RequestBody Autor autor, @PathVariable("id") Long id) {
+		autor.setId(id);
+		autoresService.atualizar(autor);		
+		
+		return ResponseEntity.noContent().build();						
+	}
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Autor> buscar(@PathVariable("id") Long id) {		
 		return ResponseEntity.ok(autoresService.buscar(id));

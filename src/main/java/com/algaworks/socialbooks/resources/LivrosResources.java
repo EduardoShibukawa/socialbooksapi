@@ -3,6 +3,8 @@ package com.algaworks.socialbooks.resources;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +30,7 @@ public class LivrosResources {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> salvar(@RequestBody Livro livro) {
+	public ResponseEntity<Void> salvar(@Valid @RequestBody Livro livro) {
 		livro = livrosservice.salvar(livro);
 		
 		URI uri = ServletUriComponentsBuilder
@@ -40,7 +42,7 @@ public class LivrosResources {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> atualizar(@RequestBody Livro livro, @PathVariable("id") Long id) {
+	public ResponseEntity<Void> atualizar(@Valid @RequestBody Livro livro, @PathVariable("id") Long id) {
 		livro.setId(id);
 		livrosservice.atualizar(livro);		
 		
@@ -56,6 +58,7 @@ public class LivrosResources {
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deletar(@PathVariable("id") Long id) {
+		livrosservice.deletarComentarios(id);
 		livrosservice.deletar(id);
 		
 		return ResponseEntity.noContent().build();				
@@ -63,6 +66,7 @@ public class LivrosResources {
 	
 	@RequestMapping(value = "/{id}/comentarios", method = RequestMethod.POST)
 	public ResponseEntity<Void> adicionarComentario(
+			@Valid
 			@PathVariable("id") Long livroid,		
 			@RequestBody Comentario comentario) {
 		

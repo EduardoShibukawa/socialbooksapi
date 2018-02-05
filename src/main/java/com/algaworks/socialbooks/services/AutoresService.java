@@ -40,5 +40,15 @@ public class AutoresService {
 		}
 					
 		return autor;
-	}	
+	}
+	
+	public void atualizar(Autor autor) {
+		verificarExistencia(autor.getId());
+		autoresrepository.save(autor);			
+	}
+	
+	public void verificarExistencia(Long id) {
+		buscar(id);
+	}
+	
 }
